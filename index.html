@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>IQRA — Специфичные буквы (Дыбыстар)</title>
+<style>
+  :root{
+    --pp:#5B43E6;--pp2:#7D6BFF;--gold:#E8A33D;--baur:#E0A559;--baur2:#C8843C;
+    --ink:#2c2140;--muted:#6b6280;--line:#e5dff5;--ok:#20a86a;--err:#e0466a;
+    --sky1:#bfe3f5;--sky2:#e9f4d8;--grass:#cfe6a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+  body{background:#d8d3ec;display:flex;justify-content:center;padding:20px;min-height:100vh}
+  .phone{width:390px;max-width:100%;border-radius:38px;overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4);min-height:820px;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,#8ec5e0 0%,#bfe0c8 32%,#cfe6a8 55%,#c3dd96 100%)}
+  .status{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;color:#2c2140;font-size:13px;font-weight:600;flex-shrink:0}
+  .screen{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
+  .screen::-webkit-scrollbar{width:0}
+  /* верхняя панель карты */
+  .maptop{display:flex;align-items:center;gap:10px;padding:6px 16px 0}
+  .coin{background:#fff;border-radius:20px;padding:5px 10px 5px 6px;display:flex;align-items:center;gap:5px;font-weight:800;color:var(--ink);font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .coin .c{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd873,#e8a33d);display:flex;align-items:center;justify-content:center;font-size:12px}
+  .coin .plus{width:20px;height:20px;border-radius:50%;background:var(--pp);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;margin-left:2px}
+  .modpill{background:var(--pp);color:#fff;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(91,67,230,.3)}
+  .ava{margin-left:auto;width:44px;height:44px;border-radius:50%;border:3px solid #fff;background:linear-gradient(135deg,#b9a6ff,#7d6bff);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  .maptitle{text-align:center;color:#fff;font-size:23px;font-weight:800;margin:6px 20px 2px;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .mapsub{text-align:center;color:#fff;font-size:12px;opacity:.9;margin-bottom:6px;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .note{background:rgba(255,255,255,.85);border:1px solid #d9b98a;color:#7a5a2a;font-size:11px;border-radius:10px;padding:8px 12px;margin:6px 16px;line-height:1.5}
+  /* тропа с баурсаками */
+  .trail{position:relative;padding:10px 0 30px}
+  .node{display:flex;align-items:center;gap:14px;padding:10px 20px;cursor:pointer;position:relative;width:100%;transition:.15s}
+  .node:hover{transform:scale(1.02)}
+  .baur{width:76px;height:70px;flex-shrink:0;border-radius:50% 50% 48% 48%/55% 55% 45% 45%;
+    background:radial-gradient(circle at 38% 32%,#f0c078,var(--baur) 60%,var(--baur2));
+    display:flex;align-items:center;justify-content:center;font-size:26px;color:#5a3a1a;position:relative;
+    box-shadow:0 6px 14px rgba(140,90,30,.4),inset 0 -4px 8px rgba(120,70,20,.35),inset 0 3px 6px rgba(255,240,200,.6);
+    border:2px solid #d89a52}
+  .baur .num{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#fff;color:var(--pp);
+    width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+  .node.done .baur{filter:saturate(1.2)}
+  .node.done .baur::after{content:'✓';position:absolute;bottom:-4px;right:-2px;background:var(--ok);color:#fff;width:22px;height:22px;border-radius:50%;font-size:13px;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .node.cur .baur{animation:bob 1.6s ease-in-out infinite}
+  .node.locked{opacity:.5;filter:grayscale(.5);cursor:not-allowed}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .stars{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);display:flex;gap:1px;font-size:11px}
+  .label{background:rgba(255,255,255,.92);border-radius:14px;padding:8px 14px;box-shadow:0 3px 10px rgba(0,0,0,.12);display:flex;align-items:center;gap:10px}
+  .label .ic{width:34px;height:34px;border-radius:10px;background:#f0ecfd;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .label b{color:var(--ink);font-size:14px;display:block}.label span{color:var(--muted);font-size:11px}
+  .takthdr{margin:14px 22px 2px;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);opacity:.95}
+  /* нижняя навигация */
+  .nav{display:flex;justify-content:space-around;align-items:center;background:#fff;padding:8px 0 20px;flex-shrink:0;border-top:1px solid #eee}
+  .nav .it{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#9a97b5}.nav .it.active{color:var(--pp)}.nav .it .i{font-size:19px}
+  .nav .center{width:52px;height:52px;border-radius:50%;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:-22px;box-shadow:0 6px 18px rgba(91,67,230,.5);border:3px solid #fff}
+  /* ===== экран упражнения (светлый) ===== */
+  .exhead{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .back{width:36px;height:36px;border-radius:50%;border:none;background:#f0ecfd;color:var(--pp);font-size:18px;cursor:pointer}
+  .exhead .pg{flex:1;height:10px;background:#eae5f7;border-radius:6px;overflow:hidden}
+  .exhead .pg .fill{height:100%;background:var(--pp);border-radius:6px;transition:.3s}
+  .exhead .hearts{color:var(--err);font-size:14px;font-weight:700}
+  .body{padding:18px;background:#faf9ff;min-height:560px}
+  .qtag{color:var(--pp2);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .qtext{color:var(--ink);font-size:20px;font-weight:800;line-height:1.3;margin-bottom:6px}
+  .qhint{color:var(--muted);font-size:13px;margin-bottom:18px}
+  .videobox{border-radius:16px;overflow:hidden;margin-bottom:16px;background:#000;aspect-ratio:16/9}.videobox iframe{width:100%;height:100%;border:0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .letterbig{text-align:center;padding:20px}
+  .letterbig .L{font-size:64px;font-weight:800;color:var(--pp)}
+  .letterbig .tr{color:var(--muted);font-size:15px;margin-top:4px}
+  .example{background:#f0ecfd;border-radius:12px;padding:14px;margin-top:12px;text-align:center}
+  .example .w{font-size:22px;font-weight:700;color:var(--ink)}
+  .example .w .hl{color:var(--pp);background:#ffe9a8;border-radius:4px;padding:0 2px}
+  .example .ru{color:var(--muted);font-size:13px;margin-top:4px}
+  .opt{background:#fff;border:2px solid var(--line);border-radius:14px;padding:15px 16px;color:var(--ink);font-size:17px;margin-bottom:10px;cursor:pointer;transition:.12s;display:flex;align-items:center;gap:10px;width:100%;text-align:left}
+  .opt:hover{border-color:var(--pp2)}.opt.sel{border-color:var(--pp);background:#f3f0ff}
+  .opt.correct{border-color:var(--ok);background:#e6f7ef}.opt.wrong{border-color:var(--err);background:#fdeaef}
+  .opt .mark{margin-left:auto}
+  .hintbtn{background:#fff;border:1px dashed var(--pp2);color:var(--pp2);border-radius:12px;padding:9px;width:100%;font-size:13px;cursor:pointer;margin-bottom:12px}
+  .hintbox{background:#f3f0ff;border-radius:10px;padding:10px 12px;font-size:13px;color:#5a4fa0;margin-bottom:12px}
+  .micbtn{width:104px;height:104px;border-radius:50%;background:var(--pp);border:none;color:#fff;font-size:38px;cursor:pointer;margin:10px auto;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(91,67,230,.5)}
+  .micbtn:active{transform:scale(.95)}
+  .wave{text-align:center;color:var(--pp2);font-size:13px;margin-bottom:14px;min-height:16px}
+  .playbtn{width:96px;height:96px;border-radius:50%;background:var(--gold);border:none;color:#fff;font-size:34px;cursor:pointer;margin:10px auto;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(232,163,61,.5)}
+  .builder{min-height:56px;border-bottom:2px dashed var(--line);display:flex;flex-wrap:wrap;gap:8px;padding:10px 0 14px;margin-bottom:16px;justify-content:center}
+  .bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .chip{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 16px;color:var(--ink);font-size:18px;font-weight:700;cursor:pointer}
+  .chip.used{opacity:.25;pointer-events:none}.chip.inbuild{background:#f3f0ff;border-color:var(--pp)}
+  .foot{padding:14px 18px 22px;background:#faf9ff;position:sticky;bottom:0}
+  .btn{width:100%;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer}
+  .btn.primary{background:var(--pp);color:#fff}.btn.primary:disabled{opacity:.4;cursor:not-allowed}
+  .fb{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;width:354px;max-width:92%;border-radius:14px;padding:14px 18px;font-weight:800;font-size:15px;display:none;z-index:30;align-items:center;gap:10px}
+  .fb.ok{background:var(--ok);color:#fff;display:flex}.fb.no{background:var(--err);color:#fff;display:flex}
+  .dhead{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;display:flex;gap:10px;align-items:center}
+  .dhead .a{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#b9a6ff,#7d6bff);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .dhead b{color:var(--ink);font-size:14px}.dhead span{color:var(--muted);font-size:12px}
+  .msg{display:flex;gap:10px;margin-bottom:12px;align-items:flex-end}.msg.me{flex-direction:row-reverse}
+  .msg .a{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#b9a6ff,#7d6bff);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px}.msg.me .a{background:#2fa86a}
+  .bubble{background:#fff;border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:11px 15px;color:var(--ink);font-size:15px;max-width:76%}.msg.me .bubble{background:var(--pp);color:#fff;border:none;border-radius:16px 16px 4px 16px}
+  .steptag{text-align:center;color:var(--muted);font-size:11px;margin:6px 0 12px}
+  .done{text-align:center;padding:50px 30px}.done .big{font-size:60px}.done h2{color:var(--ink);font-size:24px;margin:14px 0 6px}.done p{color:var(--muted);font-size:14px;margin-bottom:22px}
+  .badge{display:inline-block;background:#fff;border:2px solid var(--gold);border-radius:14px;padding:12px 20px;color:var(--gold);font-weight:800;margin-bottom:22px}
+  .eximg{width:150px;height:150px;object-fit:contain;margin:6px auto 12px;display:block;border-radius:16px}
+  .imgph{width:150px;height:150px;margin:6px auto 12px;border:2px dashed #c9bfe8;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9a8fc8;font-size:28px;text-align:center;background:#f7f5ff}
+  .imgph small{font-size:9px;color:#b0a5d5;margin-top:4px;word-break:break-all;padding:0 6px}
+  .videobox .vidph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:#2a2140;font-size:28px}
+  .videobox .vidph small{font-size:11px;opacity:.7;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status"><span>9:41</span><span>●●● 📶 🔋</span></div>
+  <div class="screen" id="screen"></div>
+  <div class="nav">
+    <div class="it active"><span class="i">🗺️</span>Обучение</div>
+    <div class="it"><span class="i">🏋️</span>Практика</div>
+    <div class="center">🐱</div>
+    <div class="it"><span class="i">🏆</span>Рейтинг</div>
+    <div class="it"><span class="i">👤</span>Профиль</div>
+  </div>
+</div>
+<div class="fb" id="fb"></div>
+
+<script>
+/* ⚠️ Казахский — ЧЕРНОВИК под лингвиста.
+   Раздел: специфичные буквы казахского (Дыбыстар). 7 печенек, двухтактовая структура. */
+
+// 9 спецбукв + базовое слово-пример (буква для подсветки)
+const LETTERS=[
+ {L:"Ә ә",tr:"[ä]",word:"Әже",hl:"Ә",ru:"бабушка",img:"img/word-aje.png",audioL:"audio/letter-a.mp3.mp3",audioW:"audio/word-aje.mp3.mp3"},
+ {L:"Ғ ғ",tr:"[ğ]",word:"Ғалым",hl:"Ғ",ru:"учёный",img:"img/word-galym.png",audioL:"audio/letter-gh.mp3.mp3",audioW:"audio/word-galym.mp3.mp3"},
+ {L:"Қ қ",tr:"[q]",word:"Қар",hl:"Қ",ru:"снег",img:"img/word-qar.png",audioL:"audio/letter-q.mp3.mp3",audioW:"audio/word-qar.mp3.mp3"},
+ {L:"Ң ң",tr:"[ŋ]",word:"Таң",hl:"ң",ru:"рассвет",img:"img/word-tan.png",audioL:"audio/letter-ng.mp3.mp3",audioW:"audio/word-tan.mp3.mp3"},
+ {L:"Ө ө",tr:"[ö]",word:"Өзен",hl:"Ө",ru:"река",img:"img/word-ozen.png",audioL:"audio/letter-o.mp3.mp3",audioW:"audio/word-ozen.mp3.mp3"},
+ {L:"Ұ ұ",tr:"[ū]",word:"Ұл",hl:"Ұ",ru:"сын",img:"img/word-ul.png",audioL:"audio/letter-u.mp3.mp3",audioW:"audio/word-ul.mp3.mp3"},
+ {L:"Ү ү",tr:"[ü]",word:"Үй",hl:"Ү",ru:"дом",img:"img/word-uy.png",audioL:"audio/letter-ue.mp3.mp3",audioW:"audio/word-uy.mp3.mp3"},
+ {L:"Һ һ",tr:"[h]",word:"Һәм",hl:"Һ",ru:"и (книжн.)",img:"",audioL:"audio/letter-h.mp3.mp3",audioW:"audio/word-ham.mp3.mp3"},
+ {L:"І і",tr:"[ı]",word:"Іні",hl:"І",ru:"младший брат",img:"img/word-ini.png",audioL:"audio/letter-i.mp3.mp3",audioW:"audio/word-ini.mp3.mp3"},
+];
+// базовый словарь раздела (7-8 слов)
+const WORDS=[
+ {kz:"Әже",ru:"бабушка"},{kz:"Үй",ru:"дом"},{kz:"Қар",ru:"снег"},
+ {kz:"Өзен",ru:"река"},{kz:"Ұл",ru:"сын"},{kz:"Іні",ru:"младший брат"},
+ {kz:"Сәлем",ru:"привет"},{kz:"Рахмет",ru:"спасибо"},
+];
+
+const B=[
+ {n:1,tk:1,icon:"▶️",title:"Видео",sub:"Дыбыстар · объяснение звуков",kind:"video"},
+ {n:2,tk:1,icon:"🃏",title:"Слово",sub:"9 спецбукв + примеры",kind:"letters"},
+ {n:3,tk:1,icon:"🎤",title:"Шэдоуинг",sub:"повторяй за персонажем",kind:"shadow"},
+ {n:4,tk:1,icon:"🔊",title:"Собери слово",sub:"по аудио",kind:"assemble"},
+ {n:5,tk:2,icon:"✏️",title:"Тренировка",sub:"всё пройденное",kind:"train1"},
+ {n:6,tk:2,icon:"✏️",title:"Тренировка",sub:"сложнее",kind:"train2"},
+ {n:7,tk:3,icon:"🗣️",title:"Разговор",sub:"с Айбарысом",kind:"dialog"},
+];
+
+const screen=document.getElementById('screen');
+// картинка: если путь задан — показываем <img>, иначе рамку-заглушку с именем файла
+function pic(src,alt,cls){
+  if(!src) return '';
+  return `<img src="${src}" alt="${alt||''}" class="${cls||'eximg'}" onerror="this.outerHTML='<div class=\'imgph\'>🖼️<br><small>'+this.alt+'<br>'+this.src+'</small></div>'">`;
+}
+let done=[];
+function fb(ok,t){const el=document.getElementById('fb');el.className='fb '+(ok?'ok':'no');el.textContent=(ok?'✓ ':'✗ ')+t;clearTimeout(el._t);el._t=setTimeout(()=>el.className='fb',1400);}
+function playAudio(src,label){
+  if(src){try{const a=new Audio(src);a.play().catch(()=>fb(true,'🔊 '+label+' (файл: '+src+')'));}catch(e){fb(true,'🔊 '+label);}}
+  else fb(true,'🔊 '+label);
+}
+function isNext(n){for(const b of B){if(!done.includes(b.n))return b.n===n;}return false;}
+
+function renderMap(){
+  let html=`<div class="maptop">
+     <div class="coin"><span class="c">🪙</span>100<span class="plus">+</span></div>
+     <div class="modpill">✦ Модуль 1 · Апта 1 ✦</div>
+     <div class="ava">🐱</div></div>
+   <div class="maptitle">Дыбыстар — звуки</div>
+   <div class="mapsub">Специфичные буквы казахского языка</div>
+   <div class="note">⚠️ Казахский текст — черновик для прототипа. Буквы, слова и произношение выверяет лингвист.</div>
+   <div class="trail">`;
+  let curtk=0;
+  B.forEach(b=>{
+    if(b.tk!==curtk){curtk=b.tk;html+=`<div class="takthdr">${b.tk===1?'Такт 1 · Узнал':(b.tk===2?'Такт 2 · Подготовился':'Такт 3 · Использовал')}</div>`;}
+    const d=done.includes(b.n),cur=!d&&isNext(b.n);
+    const cls=d?'done':(cur?'cur':(isNext(b.n)?'':'')); 
+    const stars=d?'<div class="stars">⭐⭐⭐</div>':'';
+    html+=`<div class="node ${d?'done':(cur?'cur':'')}" onclick="openB(${b.n})">
+      <div class="baur"><span class="num">${b.n}</span>${b.icon}${stars}</div>
+      <div class="label"><div class="ic">${b.icon}</div><div><b>${b.title}</b><span>${b.sub}</span></div></div>
+     </div>`;
+  });
+  html+=`</div>`;
+  screen.innerHTML=html; screen.scrollTop=0;
+}
+function openB(n){
+  const b=B.find(x=>x.n===n);
+  ({video:vVideo,letters:vLetters,shadow:vShadow,assemble:vAssemble,train1:vTrain1,train2:vTrain2,dialog:vDialog}[b.kind])();
+}
+function head(cur,total){return `<div class="exhead"><button class="back" onclick="renderMap()">‹</button><div class="pg"><div class="fill" style="width:${cur/total*100}%"></div></div><span class="hearts">♥ 5</span></div>`;}
+function complete(n,last){
+  if(!done.includes(n))done.push(n);
+  screen.innerHTML=`<div class="exhead"><button class="back" onclick="renderMap()">‹</button><div class="pg"><div class="fill" style="width:100%"></div></div></div>
+   <div class="done"><div class="big">🍪</div><h2>${last?'Раздел пройден! 🎉':'Баурсак пройден!'}</h2>
+   <p>${last?'Ты знаешь 9 казахских букв и умеешь их произносить':'+15 XP · отличная работа'}</p>
+   <div class="badge">🔥 Стрик продолжается</div></div>
+   <div class="foot"><button class="btn primary" onclick="renderMap()">Вернуться на карту</button></div>`;
+}
+
+/* 1 ВИДЕО */
+function vVideo(){screen.innerHTML=head(0,1)+`<div class="body"><div class="qtag">Такт 1 · Узнал</div><div class="qtext">Дыбыстар</div>
+  <div class="qhint">В казахском есть 9 букв, которых нет в русском. Послушай, как они звучат.</div>
+  <div class="videobox"><iframe src="video/dybystar.mp4" title="Дыбыстар" onerror="this.outerHTML='<div class=\'vidph\'>🎬<br><small>video/dybystar.mp4</small></div>'"></iframe></div>
+  <div class="card"><div class="qtag" style="margin:0 0 8px">Что узнаешь</div>
+   <div style="color:var(--muted);font-size:14px;line-height:1.7">• 9 особых букв: Ә Ғ Қ Ң Ө Ұ Ү Һ І<br>• как они звучат отдельно и в словах<br>• 8 базовых слов с этими буквами</div></div>
+  </div><div class="foot"><button class="btn primary" onclick="complete(1)">Түсіндім → Жалғастыру</button></div>`;screen.scrollTop=0;}
+
+/* 2 КАРТОЧКИ БУКВ (по одной) */
+function vLetters(){
+  let i=0;
+  function draw(){const e=LETTERS[i];
+    const w=e.word.replace(e.hl,`<span class="hl">${e.hl}</span>`);
+    screen.innerHTML=head(i+1,LETTERS.length)+`<div class="body"><div class="qtag">Такт 1 · Узнал · буква ${i+1} из ${LETTERS.length}</div>
+     <div class="card letterbig"><div class="L">${e.L}</div><div class="tr">${e.tr}</div>
+       ${pic(e.img,e.word,'eximg')}
+       <button class="playbtn" onclick="playAudio(e.audioL,'${e.L}')">🔊</button>
+       <div class="example"><div class="w">${w}</div><div class="ru">${e.ru} · буква подсвечена</div>
+         <button class="hintbtn" style="margin-top:8px;margin-bottom:0" onclick="playAudio(e.audioW,'${e.word}')">🔊 послушать слово</button></div>
+     </div></div>
+     <div class="foot"><button class="btn primary" onclick="nx()">${i===LETTERS.length-1?'Үйрендім ✓':'Келесі әріп →'}</button></div>`;
+    screen.scrollTop=0;}
+  window.nx=()=>{i<LETTERS.length-1?(i++,draw()):complete(2);};
+  draw();
+}
+
+/* 3 ШЭДОУИНГ — повтори за персонажем (буквы→слова→сам перевод) */
+function vShadow(){
+  // градация: сначала буквы, потом слова, потом «скажи сам по переводу»
+  const items=[
+   {say:"Ә",ru:"буква Ә",mode:"repeat"},
+   {say:"Қ",ru:"буква Қ",mode:"repeat"},
+   {say:"Ү",ru:"буква Ү",mode:"repeat"},
+   {say:"Әже",ru:"бабушка",mode:"repeat"},
+   {say:"Үй",ru:"дом",mode:"repeat"},
+   {say:"Қар",ru:"снег",mode:"repeat"},
+   {say:"Өзен",ru:"река",mode:"recall"},   // вспомни и скажи сам
+   {say:"Сәлем",ru:"привет",mode:"recall"},
+  ];
+  let i=0,rec=false;
+  function draw(){const e=items[i];const recall=e.mode==='recall';
+    screen.innerHTML=head(i+1,items.length)+`<div class="body">
+     <div class="qtag">Такт 1 · Узнал · шэдоуинг ${i+1}/${items.length}</div>
+     <div class="qtext">${recall?'Вспомни и скажи сам':'Повтори за Айбарысом'}</div>
+     <div class="qhint">${recall?'Как будет «'+e.ru+'»? Скажи вслух.':'Слушай и повтори вслух — буква, потом слово.'}</div>
+     ${recall?'':`<button class="playbtn" onclick="fb(true,'🔊 ${e.say}')">🔊</button>`}
+     <div class="card letterbig">${recall?`<div class="tr" style="font-size:18px">«${e.ru}»</div><div style="color:var(--muted);font-size:13px;margin-top:6px">скажи по-казахски</div>`:`<div class="L" style="font-size:${e.say.length>2?'40px':'56px'}">${e.say}</div><div class="tr">${e.ru}</div>`}</div>
+     <button class="micbtn" id="mic" onclick="rc()">🎤</button><div class="wave" id="wv">нажми и скажи</div>
+     </div><div class="foot"><button class="btn primary" id="ck" onclick="nx()" disabled>Айттым ✓</button></div>`;
+    screen.scrollTop=0;rec=false;}
+  window.rc=()=>{document.getElementById('wv').textContent='▁▂▄▆█▆▄▂▁ запись… (распознавание — заглушка)';document.getElementById('mic').style.background='#e0466a';document.getElementById('ck').disabled=false;};
+  window.nx=()=>{fb(true,'Жарайсың!');i<items.length-1?(i++,draw()):complete(3);};
+  draw();
+}
+
+/* 4 СОБЕРИ СЛОВО по аудио (из букв) */
+function vAssemble(){
+  const list=[
+   {word:"Әже",bank:["Ә","ж","е","қ","ы"],a:["Ә","ж","е"]},
+   {word:"Үй",bank:["Ү","й","о","л"],a:["Ү","й"]},
+   {word:"Қар",bank:["Қ","а","р","ә","н"],a:["Қ","а","р"]},
+   {word:"Өзен",bank:["Ө","з","е","н","ұ"],a:["Ө","з","е","н"]},
+   {word:"Ұл",bank:["Ұ","л","і","қ"],a:["Ұ","л"]},
+   {word:"Іні",bank:["І","н","і","ө","т"],a:["І","н","і"]},
+   {word:"Сәлем",bank:["С","ә","л","е","м","қ"],a:["С","ә","л","е","м"]},
+   {word:"Рахмет",bank:["Р","а","х","м","е","т","ң"],a:["Р","а","х","м","е","т"]},
+  ];
+  let i=0,ans=false,build=[];
+  function draw(){const e=list[i];
+    screen.innerHTML=head(i+1,list.length)+`<div class="body"><div class="qtag">Такт 1 · Узнал · собери слово ${i+1}/${list.length}</div>
+     <div class="qtext">Собери слово, которое слышишь</div>
+     <button class="playbtn" onclick="fb(true,'🔊 ${e.word}')">🔊</button><div class="wave">нажми, чтобы прослушать</div>
+     <div class="builder" id="bd"></div><div class="bank">${e.bank.map((c,k)=>`<button class="chip" id="c${k}" onclick="tb(${k})">${c}</button>`).join('')}</div>
+     </div><div class="foot"><button class="btn primary" id="ck" onclick="ck()" disabled>Тексеру</button></div>`;
+    screen.scrollTop=0;ans=false;build=[];}
+  window.tb=k=>{if(ans)return;const e=list[i],c=document.getElementById('c'+k);if(c.classList.contains('used'))return;c.classList.add('used');build.push({k,w:e.bank[k]});rb();document.getElementById('ck').disabled=!build.length;};
+  window.ub=p=>{if(ans)return;document.getElementById('c'+build[p].k).classList.remove('used');build.splice(p,1);rb();document.getElementById('ck').disabled=!build.length;};
+  function rb(){document.getElementById('bd').innerHTML=build.map((x,p)=>`<button class="chip inbuild" onclick="ub(${p})">${x.w}</button>`).join('');}
+  window.ck=()=>{if(ans){i<list.length-1?(i++,draw()):complete(4);return;}const e=list[i],ok=JSON.stringify(build.map(x=>x.w))===JSON.stringify(e.a);ans=true;fb(ok,ok?'Дұрыс!':'Правильно: '+e.a.join(''));document.getElementById('ck').textContent=i<list.length-1?'Әрі қарай →':'Завершить ✓';};
+  draw();
+}
+
+/* универсальный движок выбора с градацией и подсказками + отработка ошибок */
+function choiceSet(n,list,label,last){
+  let i=0,ans=false,sel=null,wrong=[],phase='main';
+  const cur=()=>phase==='main'?list[i]:wrong[i];const tot=()=>phase==='main'?list.length:wrong.length;
+  const diff=k=>k<2?'лёгкое':(k<5?'базовое':'сложное');
+  function draw(){const e=cur();const showH=phase==='main'&&i<5;
+    screen.innerHTML=head(i+1,tot())+`<div class="body"><div class="qtag">${phase==='err'?'Работа над ошибками':label+' · '+diff(i)}</div>
+     <div class="qtext">${e.q}</div>${e.big?`<div class="card letterbig"><div class="L" style="font-size:${e.big.length>2?'40px':'56px'}">${e.big}</div></div>`:''}
+     ${showH?`<button class="hintbtn" id="hb" onclick="sh()">💡 Подсказка</button><div id="hbx"></div>`:''}
+     ${e.options.map((o,k)=>`<button class="opt" data-k="${k}" onclick="pk(${k})">${o}<span class="mark"></span></button>`).join('')}
+     </div><div class="foot"><button class="btn primary" id="ck" onclick="ck()" disabled>Тексеру</button></div>`;
+    screen.scrollTop=0;ans=false;sel=null;}
+  window.sh=()=>{document.getElementById('hbx').innerHTML=`<div class="hintbox">💡 ${cur().hint||'Вспомни звучание буквы'}</div>`;document.getElementById('hb').style.display='none';};
+  window.pk=k=>{if(ans)return;sel=k;document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));document.querySelector('.opt[data-k="'+k+'"]').classList.add('sel');document.getElementById('ck').disabled=false;};
+  window.ck=()=>{if(ans){if(i<tot()-1){i++;draw();}else if(phase==='main'&&wrong.length){phase='err';i=0;fb(true,'Разберём ошибки');draw();}else complete(n,last);return;}
+    const e=cur(),ok=sel===e.a;document.querySelectorAll('.opt').forEach(o=>{const k=+o.dataset.k;if(k===e.a)o.classList.add('correct');if(k===sel&&!ok)o.classList.add('wrong');});
+    if(!ok&&phase==='main')wrong.push(e);ans=true;fb(ok,ok?'Дұрыс!':'Верный ответ подсвечен');
+    const fin=(i===tot()-1)&&!(phase==='main'&&wrong.length);document.getElementById('ck').textContent=fin?(last?'Завершить ✓':'Завершить ✓'):'Әрі қарай →';};
+  draw();
+}
+
+/* 5 ТРЕНИРОВКА 1 — узнавание букв и слов */
+function vTrain1(){
+  choiceSet(5,[
+   {q:"Какая буква звучит [ä]?",big:"?",options:["Ә","А","О"],a:0,hint:"[ä] — мягкое а → Ә"},
+   {q:"Какая буква звучит [q]?",options:["К","Қ","Х"],a:1,hint:"глубокое к → Қ"},
+   {q:"«Әже» — это…",big:"Әже",options:["дом","бабушка","снег"],a:1},
+   {q:"В каком слове есть Ү?",options:["Қар","Үй","Өзен"],a:1,hint:"Үй — дом"},
+   {q:"«Қар» — это…",big:"Қар",options:["снег","река","сын"],a:0},
+   {q:"Какая буква в «Өзен» особая?",big:"Өзен",options:["Ө","з","н"],a:0},
+   {q:"«Іні» — это…",options:["бабушка","младший брат","дом"],a:1},
+   {q:"Где звук [ŋ] (Ң)?",options:["Таң","Қар","Үй"],a:0,hint:"Таң — рассвет, носовое ң"},
+   {q:"«Сәлем» — это…",big:"Сәлем",options:["спасибо","привет","снег"],a:1},
+  ],"Такт 2 · тренировка");
+}
+
+/* 6 ТРЕНИРОВКА 2 — сложнее (различение пар, буква в слове) */
+function vTrain2(){
+  choiceSet(6,[
+   {q:"Чем Қ отличается от К?",options:["Қ глубже, из горла","ничем","Қ мягче"],a:0,hint:"Қ — глубокий гортанный"},
+   {q:"Вставь букву: «__й» (дом)",options:["Ү","У","Ұ"],a:0,hint:"Үй — дом"},
+   {q:"Вставь: «__же» (бабушка)",options:["А","Ә","О"],a:1},
+   {q:"Где Ұ (не Ү)?",options:["Ұл (сын)","Үй (дом)","Іні"],a:0,hint:"Ұл — твёрдое ұ"},
+   {q:"«Өзен» начинается с…",options:["О","Ө","Ұ"],a:1},
+   {q:"Вставь: «Қ__р» (снег)",options:["а","ә","о"],a:0},
+   {q:"Сколько особых букв в «Сәлеметсіз»?",big:"Сәлеметсіз",options:["одна","две (ә, і)","три"],a:1,hint:"ә и і"},
+   {q:"Какое слово с Ң?",options:["Таң","Әже","Ұл"],a:0},
+   {q:"«Рахмет» значит…",options:["привет","спасибо","дом"],a:1},
+  ],"Такт 2 · тренировка сложнее");
+}
+
+/* 7 РАЗГОВОР С АЙБАРЫСОМ */
+function vDialog(){
+  const list=[
+   {step:"Выбор · 1",b:"Сәлем! Қазақ әріптерін үйрендің бе?",pr:"Ответь «да, выучил»",k:"c",o:["Иә, үйрендім","Жоқ","Қар"],a:0},
+   {step:"Выбор · 2",b:"«Әже» деген не?",pr:"Что значит «Әже»?",k:"c",o:["бабушка","дом","снег"],a:0},
+   {step:"Собери · 3",b:"«Дом» — қалай айтамыз?",pr:"Собери слово «дом»",k:"as",bank:["Ү","й","о"],a:["Ү","й"]},
+   {step:"Речь · 4",b:"Маған бір әріпті дауыстап айт.",pr:"Скажи вслух любую букву, например «Қ»",k:"s",t:"Қ"},
+   {step:"Речь · 5",b:"Керемет! «Рахмет» деп айтшы.",pr:"Скажи вслух «Рахмет»",k:"s",t:"Рахмет"},
+   {step:"Речь · 6",b:"Жарайсың! Сау бол!",pr:"Попрощайся вслух: «Сау бол!»",k:"s",t:"Сау бол!"},
+  ];
+  let i=0,ans=false,sel=null,build=[],hist=[];
+  function draw(){const e=list[i];
+    let h=hist.map(x=>`<div class="msg ${x.me?'me':''}"><div class="a">${x.me?'🧑':'🐱'}</div><div class="bubble">${x.t}</div></div>`).join('');
+    let body='';
+    if(e.k==='c')body=e.o.map((o,k)=>`<button class="opt" data-k="${k}" onclick="pk(${k})">${o}<span class="mark"></span></button>`).join('');
+    else if(e.k==='as')body=`<div class="builder" id="bd"></div><div class="bank">${e.bank.map((c,k)=>`<button class="chip" id="c${k}" onclick="tb(${k})">${c}</button>`).join('')}</div>`;
+    else body=`<button class="micbtn" id="mic" onclick="rc()">🎤</button><div class="wave" id="wv">нажми и скажи</div><div class="card letterbig"><div class="L" style="font-size:${e.t.length>3?'32px':'52px'}">${e.t}</div></div>`;
+    screen.innerHTML=head(i+1,list.length)+`<div class="body"><div class="dhead"><div class="a">🐱</div><div><b>Айбарыс</b><br><span>${e.step}</span></div></div>
+      ${h}<div class="msg"><div class="a">🐱</div><div class="bubble">${e.b}</div></div><div class="steptag">— ${e.pr} —</div>${body}</div>
+      <div class="foot"><button class="btn primary" id="ck" onclick="ck()" ${e.k==='s'?'':'disabled'}>${e.k==='s'?'Айттым ✓':'Жауап'}</button></div>`;
+    screen.scrollTop=999;ans=false;sel=null;build=[];}
+  window.pk=k=>{if(ans)return;sel=k;document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));document.querySelector('.opt[data-k="'+k+'"]').classList.add('sel');document.getElementById('ck').disabled=false;};
+  window.tb=k=>{if(ans)return;const e=list[i],c=document.getElementById('c'+k);if(c.classList.contains('used'))return;c.classList.add('used');build.push({k,w:e.bank[k]});rb();document.getElementById('ck').disabled=!build.length;};
+  window.ub=p=>{if(ans)return;document.getElementById('c'+build[p].k).classList.remove('used');build.splice(p,1);rb();document.getElementById('ck').disabled=!build.length;};
+  function rb(){document.getElementById('bd').innerHTML=build.map((x,p)=>`<button class="chip inbuild" onclick="ub(${p})">${x.w}</button>`).join('');}
+  window.rc=()=>{document.getElementById('wv').textContent='▁▂▄▆█▆▄▂▁ запись… (заглушка)';document.getElementById('mic').style.background='#e0466a';document.getElementById('ck').disabled=false;};
+  window.ck=()=>{const e=list[i];if(ans){i<list.length-1?(i++,draw()):complete(7,true);return;}
+    let ok=true,my='';
+    if(e.k==='c'){ok=sel===e.a;my=e.o[sel!=null?sel:e.a];document.querySelectorAll('.opt').forEach(o=>{const k=+o.dataset.k;if(k===e.a)o.classList.add('correct');if(k===sel&&!ok)o.classList.add('wrong');});}
+    else if(e.k==='as'){ok=JSON.stringify(build.map(x=>x.w))===JSON.stringify(e.a);my=ok?build.map(x=>x.w).join(''):e.a.join('');}
+    else my=e.t;
+    hist.push({me:false,t:e.b});hist.push({me:true,t:my});ans=true;fb(ok,e.k==='s'?'Жарайсың!':(ok?'Дұрыс!':'Верный вариант показан'));
+    const bt=document.getElementById('ck');bt.disabled=false;bt.textContent=i<list.length-1?'Әрі қарай →':'Завершить раздел ✓';};
+  draw();
+}
+
+renderMap();
+</script>
+</body>
+</html>
