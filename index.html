@@ -220,9 +220,9 @@ function vLetters(){
     screen.innerHTML=head(i+1,LETTERS.length)+`<div class="body"><div class="qtag">Такт 1 · Узнал · буква ${i+1} из ${LETTERS.length}</div>
      <div class="card letterbig"><div class="L">${e.L}</div><div class="tr">${e.tr}</div>
        ${pic(e.img,e.word,'eximg')}
-       <button class="playbtn" onclick="playAudio(e.audioL,'${e.L}')">🔊</button>
+       <button class="playbtn" onclick="playAudio('${e.audioL}','${e.L}')">🔊</button>
        <div class="example"><div class="w">${w}</div><div class="ru">${e.ru} · буква подсвечена</div>
-         <button class="hintbtn" style="margin-top:8px;margin-bottom:0" onclick="playAudio(e.audioW,'${e.word}')">🔊 послушать слово</button></div>
+         <button class="hintbtn" style="margin-top:8px;margin-bottom:0" onclick="playAudio('${e.audioW}','${e.word}')">🔊 послушать слово</button></div>
      </div></div>
      <div class="foot"><button class="btn primary" onclick="nx()">${i===LETTERS.length-1?'Үйрендім ✓':'Келесі әріп →'}</button></div>`;
     screen.scrollTop=0;}
