@@ -62,7 +62,7 @@
   .qtag{color:var(--pp2);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
   .qtext{color:var(--ink);font-size:20px;font-weight:800;line-height:1.3;margin-bottom:6px}
   .qhint{color:var(--muted);font-size:13px;margin-bottom:18px}
-  .videobox{border-radius:16px;overflow:hidden;margin-bottom:16px;background:#000;aspect-ratio:16/9}.videobox iframe{width:100%;height:100%;border:0}
+  .videobox{border-radius:16px;overflow:hidden;margin-bottom:16px;background:#000;aspect-ratio:16/9}.videobox video{width:100%;height:100%;border:0}
   .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
   .letterbig{text-align:center;padding:20px}
   .letterbig .L{font-size:64px;font-weight:800;color:var(--pp)}
@@ -104,6 +104,45 @@
   .imgph small{font-size:9px;color:#b0a5d5;margin-top:4px;word-break:break-all;padding:0 6px}
   .videobox .vidph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:#2a2140;font-size:28px}
   .videobox .vidph small{font-size:11px;opacity:.7;margin-top:6px}
+  .videobox video{width:100%;height:100%;object-fit:cover;background:#000}
+  .songcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;cursor:pointer}
+  .songcard .cover{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,#b9a6ff,#7d6bff);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .songcard b{color:var(--ink);font-size:15px;display:block}.songcard span{color:var(--muted);font-size:12px}
+  .playerbar{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:16px}
+  .playerbar .top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .playerbar .cover{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#b9a6ff,#7d6bff);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+  .playerbar .info b{display:block;color:var(--ink);font-size:15px}.playerbar .info span{color:var(--muted);font-size:12px}
+  .playbtn2{width:44px;height:44px;border-radius:50%;background:var(--pp);color:#fff;border:none;font-size:18px;cursor:pointer;margin-left:auto}
+  .progress{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:4px}
+  .progress .f{height:100%;background:var(--pp);width:32%}
+  .timerow{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+  .lyricbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+  .lyricline{padding:10px 0;border-bottom:1px dashed var(--line);text-align:center}
+  .lyricline:last-child{border:0}
+  .lyricline .kz{color:var(--muted);font-size:15px}
+  .lyricline .ru{color:#b5aed0;font-size:12px;margin-top:2px}
+  .lyricline.active .kz{color:var(--pp);font-weight:800;font-size:17px}
+  .lyricline.active .ru{color:var(--muted)}
+  .gamecard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;cursor:pointer}
+  .gamecard .ic{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;color:#fff}
+  .gamecard b{color:var(--ink);font-size:15px;display:block}.gamecard span{color:var(--muted);font-size:12px}
+  .wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:280px;margin:0 auto 16px}
+  .wtile{aspect-ratio:1;border:2px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--ink);background:#fff}
+  .wtile.g{background:var(--ok);border-color:var(--ok);color:#fff}.wtile.y{background:#e8b93d;border-color:#e8b93d;color:#fff}.wtile.gr{background:#c7c2d6;border-color:#c7c2d6;color:#fff}
+  .wkbrow{display:flex;justify-content:center;gap:4px;margin-bottom:6px;flex-wrap:wrap}
+  .wkey{min-width:26px;height:38px;padding:0 6px;border-radius:6px;border:none;background:#e8e4f5;color:var(--ink);font-size:12px;font-weight:700;cursor:pointer}
+  .wkey.g{background:var(--ok);color:#fff}.wkey.y{background:#e8b93d;color:#fff}.wkey.gr{background:#c7c2d6;color:#fff}
+  .wkey.wide{min-width:52px}
+  .timerbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:14px}
+  .timerbar .f{height:100%;background:var(--err);transition:width 1s linear}
+  .scoretag{position:absolute;top:14px;right:18px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-weight:800;color:var(--pp);font-size:13px;z-index:5}
+  .matchgrid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mcard{background:#fff;border:2px solid var(--line);border-radius:12px;padding:16px 8px;text-align:center;font-weight:700;color:var(--ink);cursor:pointer;font-size:14px}
+  .mcard.sel{border-color:var(--pp);background:#f3f0ff}.mcard.done{border-color:var(--ok);background:#e6f7ef;opacity:.5;pointer-events:none}
+  .mcard.wrong{border-color:var(--err) !important;background:#fdeaef !important}
+  .flashcard{border-radius:22px;padding:36px 20px;text-align:center;margin-bottom:16px;box-shadow:0 10px 28px rgba(91,67,230,.25)}
+  .flashcard .fc-word{color:#fff;font-size:32px;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,.15)}
+  .flashcard .fc-sub{color:rgba(255,255,255,.85);font-size:12px;margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
 </style>
 </head>
 <body>
@@ -111,9 +150,9 @@
   <div class="status"><span>9:41</span><span>●●● 📶 🔋</span></div>
   <div class="screen" id="screen"></div>
   <div class="nav">
-    <div class="it active"><span class="i">🗺️</span>Обучение</div>
-    <div class="it"><span class="i">🏋️</span>Практика</div>
-    <div class="center">🐱</div>
+    <div class="it active" id="navStudy" onclick="goStudy()"><span class="i">🗺️</span>Обучение</div>
+    <div class="it" id="navPractice" onclick="goPractice()"><span class="i">🏋️</span>Практика</div>
+    <div class="center" onclick="goStudy()">🐱</div>
     <div class="it"><span class="i">🏆</span>Рейтинг</div>
     <div class="it"><span class="i">👤</span>Профиль</div>
   </div>
@@ -207,10 +246,19 @@ function complete(n,last){
 /* 1 ВИДЕО */
 function vVideo(){screen.innerHTML=head(0,1)+`<div class="body"><div class="qtag">Такт 1 · Узнал</div><div class="qtext">Дыбыстар</div>
   <div class="qhint">В казахском есть 9 букв, которых нет в русском. Послушай, как они звучат.</div>
-  <div class="videobox"><iframe src="video/dybystar.mp4" title="Дыбыстар" onerror="this.outerHTML='<div class=\'vidph\'>🎬<br><small>video/dybystar.mp4</small></div>'"></iframe></div>
+  <div class="videobox" id="vidbox"><video id="dybVideo" class="realvideo" controls playsinline preload="metadata"><source src="video/dybystar.mp4" type="video/mp4">Браузер не поддерживает видео.</video></div>
   <div class="card"><div class="qtag" style="margin:0 0 8px">Что узнаешь</div>
    <div style="color:var(--muted);font-size:14px;line-height:1.7">• 9 особых букв: Ә Ғ Қ Ң Ө Ұ Ү Һ І<br>• как они звучат отдельно и в словах<br>• 8 базовых слов с этими буквами</div></div>
-  </div><div class="foot"><button class="btn primary" onclick="complete(1)">Түсіндім → Жалғастыру</button></div>`;screen.scrollTop=0;}
+  </div><div class="foot"><button class="btn primary" onclick="complete(1)">Түсіндім → Жалғастыру</button></div>`;screen.scrollTop=0;
+  // Более надёжная обработка ошибки видео: слушаем событие error и на самом <video>,
+  // и на его <source> — некоторые браузеры не всплывают ошибку с source на video.
+  setTimeout(()=>{
+    const v=document.getElementById('dybVideo'); if(!v)return;
+    const showErr=()=>{const box=document.getElementById('vidbox'); if(box) box.innerHTML='<div class="vidph">🎬<br><small>video/dybystar.mp4<br>файл не найден или формат не поддерживается</small></div>';};
+    v.addEventListener('error',showErr);
+    const src=v.querySelector('source'); if(src) src.addEventListener('error',showErr);
+  },0);
+}
 
 /* 2 КАРТОЧКИ БУКВ (по одной) */
 function vLetters(){
@@ -370,6 +418,274 @@ function vDialog(){
     else my=e.t;
     hist.push({me:false,t:e.b});hist.push({me:true,t:my});ans=true;fb(ok,e.k==='s'?'Жарайсың!':(ok?'Дұрыс!':'Верный вариант показан'));
     const bt=document.getElementById('ck');bt.disabled=false;bt.textContent=i<list.length-1?'Әрі қарай →':'Завершить раздел ✓';};
+  draw();
+}
+
+
+/* ===== ПРАКТИКА (новый раздел) ===== */
+function goStudy(){document.getElementById('navStudy').classList.add('active');document.getElementById('navPractice').classList.remove('active');renderMap();}
+function goPractice(){document.getElementById('navPractice').classList.add('active');document.getElementById('navStudy').classList.remove('active');openPractice();}
+function practiceHead(title){return `<div class="maptop"><div class="coin"><span class="c">🪙</span>100<span class="plus">+</span></div><div class="modpill">${title}</div><div class="ava">🐱</div></div>`;}
+
+function openPractice(){
+  screen.innerHTML=practiceHead('✦ Практика ✦')+`
+   <div class="maptitle" style="color:var(--ink);text-shadow:none">Практика</div>
+   <div class="mapsub" style="color:var(--muted);text-shadow:none">Закрепляй язык вне уроков</div>
+   <div style="padding:14px 18px">
+    <div class="gamecard" onclick="songList()"><div class="ic" style="background:linear-gradient(135deg,#7d6bff,#5B43E6)">🎵</div><div><b>Разбор песен</b><span>Текст с переводом, по строкам</span></div></div>
+    <div class="gamecard" onclick="gamesList()"><div class="ic" style="background:linear-gradient(135deg,#f0997b,#e0466a)">🎮</div><div><b>Мини-игры</b><span>Вордли, на скорость, пары, пропуски</span></div></div>
+    <div class="gamecard" onclick="wordsBank()"><div class="ic" style="background:linear-gradient(135deg,#5dcaa5,#20a86a)">📚</div><div><b>Слова</b><span>Твой личный словарь</span></div></div>
+   </div>`;
+  screen.scrollTop=0;
+}
+
+/* ---- Разбор песен ---- */
+const SONGS=[
+ {id:'uyde',title:'Үйде',artist:'Дархан Джузз',emoji:'🎧',locked:false},
+ {id:'s2',title:'Менің Қазақстаным',artist:'Шәмші Қалдаяқов',emoji:'🎼',locked:true},
+ {id:'s3',title:'Дала жыры',artist:'халық әні',emoji:'🎻',locked:true},
+ {id:'s4',title:'Ана тілім',artist:'орындаушы',emoji:'🎤',locked:true},
+];
+// ⚠️ Текст песни защищён авторским правом — здесь только СТРУКТУРА для караоке-показа.
+// Замени kz/ru плейсхолдеры на лицензированный текст и перевод построчно.
+const LYRICS={
+ uyde:{title:'Үйде',artist:'Дархан Джузз',lines:[
+   {kz:'[строка 1 — вставь текст песни]',ru:'[перевод строки 1]'},
+   {kz:'[строка 2 — вставь текст песни]',ru:'[перевод строки 2]'},
+   {kz:'[строка 3 — вставь текст песни]',ru:'[перевод строки 3]'},
+   {kz:'[строка 4 — вставь текст песни]',ru:'[перевод строки 4]'},
+   {kz:'[строка 5 — вставь текст песни]',ru:'[перевод строки 5]'},
+ ]}
+};
+function songList(){
+  screen.innerHTML=practiceHead('✦ Разбор песен ✦')+`<div style="padding:14px 18px">
+   <button class="hintbtn" style="margin-bottom:14px" onclick="openPractice()">‹ Назад к практике</button>
+   ${SONGS.map(s=>s.locked
+     ? `<div class="songcard" style="opacity:.5;cursor:default"><div class="cover">${s.emoji}</div><div><b>${s.title}</b><span>${s.artist}</span></div><span class="optbadge" style="margin-left:auto">скоро</span></div>`
+     : `<div class="songcard" onclick="songPlayer('${s.id}')"><div class="cover">${s.emoji}</div><div><b>${s.title}</b><span>${s.artist}</span></div></div>`
+   ).join('')}
+   </div>`;
+  screen.scrollTop=0;
+}
+function songPlayer(id){
+  const s=LYRICS[id]; let cur=0;
+  function draw(){
+    screen.innerHTML=practiceHead('✦ Плеер ✦')+`<div style="padding:14px 18px">
+     <button class="hintbtn" style="margin-bottom:14px" onclick="songList()">‹ К списку песен</button>
+     <div class="playerbar">
+       <div class="top"><div class="cover">🎧</div><div class="info"><b>${s.title}</b><span>${s.artist}</span></div>
+         <button class="playbtn2" onclick="fb(true,'▶️ воспроизведение — заглушка')">▶</button></div>
+       <div class="progress"><div class="f"></div></div>
+       <div class="timerow"><span>0:4${cur}</span><span>3:12</span></div>
+     </div>
+     <div class="lyricbox">${s.lines.map((l,i)=>`<div class="lyricline ${i===cur?'active':''}"><div class="kz">${l.kz}</div><div class="ru">${l.ru}</div></div>`).join('')}</div>
+     <div class="note">⚠️ Текст песни — плейсхолдер (текст защищён авторским правом). Вставь лицензированный текст и перевод в массив LYRICS в коде.</div>
+     <button class="btn primary" onclick="window.__cur=(window.__cur==null?0:window.__cur+1)%${s.lines.length};songPlayerCur=window.__cur;draw()">Следующая строка ▸</button>
+     </div>`;
+    screen.scrollTop=0;
+  }
+  draw();
+}
+
+/* ---- Словарь ---- */
+// Раздел «Слова» — упражнение с выбором перевода, карточки в стиле flashcard-приложений
+// (крупное слово на цветной карточке + варианты перевода снизу, как в Reword).
+const CARD_GRADIENTS=['linear-gradient(135deg,#7d6bff,#5B43E6)','linear-gradient(135deg,#ff9ecf,#e0466a)','linear-gradient(135deg,#5dcaa5,#1b9e6e)','linear-gradient(135deg,#ffcf7a,#e8a33d)'];
+function shuffleWords(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function wordsBank(){
+  const deck=shuffleWords(WORDS);
+  let i=0,ans=false,sel=null,correctCount=0;
+  function makeOptions(w){
+    const wrongs=shuffleWords(WORDS.filter(x=>x.ru!==w.ru)).slice(0,2).map(x=>x.ru);
+    return shuffleWords([w.ru,...wrongs]);
+  }
+  function draw(){
+    const w=deck[i]; const options=makeOptions(w); const grad=CARD_GRADIENTS[i%CARD_GRADIENTS.length];
+    screen.innerHTML=practiceHead('✦ Сөздер ✦')+segsWords(i+1,deck.length)+`<div style="padding:6px 18px 18px">
+     <button class="hintbtn" style="margin-bottom:12px" onclick="openPractice()">‹ Назад к практике</button>
+     <div class="flashcard" style="background:${grad}"><div class="fc-word">${w.kz}</div><div class="fc-sub">выбери перевод</div></div>
+     ${options.map(o=>`<button class="opt" data-o="${o}" onclick="wpick('${o.replace(/'/g,"\\'")}')">${o}<span class="mark"></span></button>`).join('')}
+     </div><div class="foot"><button class="btn primary" id="wck" onclick="wnext()" disabled>Тексеру</button></div>`;
+    screen.scrollTop=0; ans=false; sel=null;
+    window.__wordAnswer=w.ru;
+  }
+  function segsWords(c,t){let s='';for(let k=1;k<=t;k++)s+=`<div class="seg ${k<c?'done':(k===c?'cur':'')}"></div>`;return `<div class="prog">${s}</div><div class="counter" style="color:var(--muted)">${c} / ${t}</div>`;}
+  window.wpick=(o)=>{ if(ans)return; sel=o; document.querySelectorAll('.opt').forEach(el=>el.classList.remove('sel')); document.querySelector('.opt[data-o="'+o+'"]').classList.add('sel'); document.getElementById('wck').disabled=false; };
+  window.wnext=()=>{
+    if(ans){ if(i<deck.length-1){i++;draw();} else {
+        screen.innerHTML=practiceHead('✦ Готово ✦')+`<div class="done"><div class="big">📚</div><h2>Слова пройдены!</h2><p>Верно: ${correctCount} из ${deck.length}</p><div class="foot" style="position:static"><button class="btn primary" onclick="openPractice()">К практике</button></div></div>`;
+      } return; }
+    const correct=window.__wordAnswer, ok=sel===correct;
+    if(ok)correctCount++;
+    document.querySelectorAll('.opt').forEach(el=>{ if(el.dataset.o===correct)el.classList.add('correct'); if(el.dataset.o===sel&&!ok)el.classList.add('wrong'); });
+    ans=true; fb(ok,ok?'Дұрыс!':'Дұрысы: '+correct);
+    document.getElementById('wck').textContent= i<deck.length-1?'Әрі қарай →':'Завершить ✓';
+  };
+  draw();
+}
+
+/* ---- Мини-игры: хаб ---- */
+function gamesList(){
+  screen.innerHTML=practiceHead('✦ Мини-игры ✦')+`<div style="padding:14px 18px">
+   <button class="hintbtn" style="margin-bottom:14px" onclick="openPractice()">‹ Назад к практике</button>
+   <div class="gamecard" onclick="gameWordle()"><div class="ic" style="background:#5B43E6">🔤</div><div><b>Сөз (Вордли)</b><span>Угадай слово за 6 попыток</span></div></div>
+   <div class="gamecard" onclick="gameSpeed()"><div class="ic" style="background:#e8a33d">⏱️</div><div><b>Жылдам</b><span>На скорость — 60 секунд</span></div></div>
+   <div class="gamecard" onclick="gameMatch()"><div class="ic" style="background:#20a86a">🧩</div><div><b>Жұп тап</b><span>Собери пару слово-перевод</span></div></div>
+   <div class="gamecard" onclick="gameCloze()"><div class="ic" style="background:#e0466a">✏️</div><div><b>Жетіспейтін сөз</b><span>Впиши пропущенное слово</span></div></div>
+   </div>`;
+  screen.scrollTop=0;
+}
+
+/* ---- Игра 1: Вордли ---- */
+function gameWordle(){
+  const ANSWER='ҚАЗАҚ'.split('');
+  const KEYS=['Ә','Ғ','Қ','Ң','Ө','Ұ','Ү','Һ','І','А','Б','Д','Е','Ж','З','К','Л','М','Н','О','Р','С','Т','У'];
+  let rows=[],cur='',keyState={},finished=false;
+  function evalRow(guess){
+    const g=guess.split(''); const res=Array(5).fill('gr'); const pool=ANSWER.slice();
+    for(let i=0;i<5;i++) if(g[i]===ANSWER[i]){res[i]='g';pool[i]=null;}
+    for(let i=0;i<5;i++){ if(res[i]==='g')continue; const idx=pool.indexOf(g[i]); if(idx>-1){res[i]='y';pool[idx]=null;} }
+    g.forEach((l,i)=>{const st=res[i]; if(!keyState[l]||st==='g'||(st==='y'&&keyState[l]!=='g')) keyState[l]=st;});
+    return res;
+  }
+  function draw(msg){
+    let grid='';
+    for(let r=0;r<6;r++){ const guess=rows[r]||(r===rows.length?cur:'');
+      for(let c=0;c<5;c++){ const ch=guess[c]||''; let cls='';
+        if(rows[r]){ const res=evalRow(rows[r]); cls=res[c]; }
+        grid+=`<div class="wtile ${cls}">${ch}</div>`; } }
+    let kb=KEYS.map(k=>`<button class="wkey ${keyState[k]||''}" ${finished?'disabled':''} onclick="wtype('${k}')">${k}</button>`).join('');
+    screen.innerHTML=practiceHead('✦ Сөз ✦')+`<div style="padding:14px 18px;position:relative">
+     <button class="hintbtn" style="margin-bottom:10px" onclick="gamesList()">‹ Назад к играм</button>
+     <div class="qtext" style="text-align:center">Угадай слово из 5 букв</div>
+     ${msg?`<div class="hintbox" style="text-align:center">${msg}</div>`:''}
+     <div class="wgrid">${grid}</div>
+     <div class="wkbrow">${kb}</div>
+     <div class="wkbrow"><button class="wkey wide" ${finished?'disabled':''} onclick="wback()">⌫</button><button class="wkey wide" ${finished?'disabled':''} onclick="wsubmit()">OK</button></div>
+     ${finished?`<button class="btn primary" style="margin-top:14px" onclick="gamesList()">К играм</button>`:''}
+     </div>`;
+    screen.scrollTop=0;
+  }
+  // ИСПРАВЛЕНО: раньше игра не останавливалась после победы/поражения — можно было
+  // печатать дальше и получить противоречивые сообщения. Теперь после finished=true
+  // клавиатура и OK/⌫ блокируются (disabled), показывается кнопка возврата.
+  window.wtype=(k)=>{ if(finished)return; if(cur.length<5) cur+=k; draw(); };
+  window.wback=()=>{ if(finished)return; cur=cur.slice(0,-1); draw(); };
+  window.wsubmit=()=>{
+    if(finished)return;
+    if(cur.length<5){draw('Слово из 5 букв!');return;}
+    rows.push(cur); const won=cur===ANSWER.join(''); cur='';
+    if(won){finished=true;draw();fb(true,'Дұрыс! Жеңдің! 🎉');}
+    else if(rows.length>=6){finished=true;draw();fb(false,'Дұрыс сөз: ҚАЗАҚ');}
+    else draw();
+  };
+  draw();
+}
+
+/* ---- Игра 2: На скорость ---- */
+function gameSpeed(){
+  function shuffleArr(a){a=[...new Set(a)];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+  const pool=[...LETTERS.map(l=>({q:l.word,a:l.ru,pool:LETTERS.map(x=>x.ru)})),
+              ...WORDS.map(w=>({q:w.kz,a:w.ru,pool:WORDS.map(x=>x.ru)}))];
+  let score=0,timeLeft=60,timer=null,curQ=null;
+  function nextQ(){ const base=pool[Math.floor(Math.random()*pool.length)];
+    // ИСПРАВЛЕНО: раньше перемешивали ВСЕ варианты (включая верный) и брали первые 3 —
+    // верный ответ мог не попасть в список. Теперь верный ответ добавляется ГАРАНТИРОВАННО,
+    // перемешиваются только 2 случайных неверных + сам порядок показа.
+    const wrongs=shuffleArr(base.pool.filter(x=>x!==base.a)).slice(0,2);
+    curQ={q:base.q,a:base.a,options:shuffleArr([base.a,...wrongs])}; }
+  function draw(){
+    screen.innerHTML=practiceHead('✦ Жылдам ✦')+`<div style="padding:14px 18px;position:relative">
+     <div class="scoretag">⭐ ${score}</div>
+     <button class="hintbtn" style="margin:34px 0 10px" onclick="stopSpeed()">‹ Завершить</button>
+     <div class="timerbar"><div class="f" style="width:${timeLeft/60*100}%"></div></div>
+     <div class="qtext" style="text-align:center">Что значит «${curQ.q}»?</div>
+     ${curQ.options.map(o=>`<button class="opt" onclick="answerSpeed('${o.replace(/'/g,"\\'")}')">${o}</button>`).join('')}
+     </div>`;
+    screen.scrollTop=0;
+  }
+  window.answerSpeed=(o)=>{ if(o===curQ.a){score++;fb(true,'+1');} else fb(false,'Дұрыс: '+curQ.a); nextQ(); draw(); };
+  window.stopSpeed=()=>{ clearInterval(timer); gamesList(); };
+  nextQ(); draw();
+  timer=setInterval(()=>{ timeLeft--;
+    if(timeLeft<=0){clearInterval(timer);
+      screen.innerHTML=practiceHead('✦ Жылдам ✦')+`<div class="done"><div class="big">⏱️</div><h2>Уақыт бітті!</h2><p>Результат: ${score} очков</p><div class="foot" style="position:static"><button class="btn primary" onclick="gamesList()">К играм</button></div></div>`;
+    } else draw();
+  },1000);
+}
+
+/* ---- Игра 3: Собери пару ---- */
+function gameMatch(){
+  // ИСПРАВЛЕНО: было слабое перемешивание sort(()=>Math.random()-0.5) — даёт неровное
+  // распределение карточек. Заменено на нормальный алгоритм Фишера-Йетса.
+  function shuffleArr(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+  const src=[...LETTERS.slice(0,4).map(l=>({kz:l.word,ru:l.ru})),...WORDS.slice(0,2)];
+  let cards=[]; src.forEach((s,i)=>{cards.push({id:i,text:s.kz,pair:i,side:'kz'});cards.push({id:i+100,text:s.ru,pair:i,side:'ru'});});
+  cards=shuffleArr(cards);
+  let sel=null,doneCount=0,lock=false;
+  function draw(){
+    screen.innerHTML=practiceHead('✦ Жұп тап ✦')+`<div style="padding:14px 18px">
+     <button class="hintbtn" style="margin-bottom:10px" onclick="gamesList()">‹ Назад к играм</button>
+     <div class="qtext" style="text-align:center">Найди пару: слово и перевод</div>
+     <div class="matchgrid2">${cards.map(c=>`<div class="mcard" id="mc${c.id}" onclick="mpick(${c.id})">${c.text}</div>`).join('')}</div>
+     </div>`;
+    screen.scrollTop=0;
+  }
+  // ИСПРАВЛЕНО: при неверной паре раньше визуально менялась только ПЕРВАЯ карточка —
+  // вторая никак не показывала, что её вообще нажали. Теперь обе карточки на миг
+  // подсвечиваются красным (класс wrong), и ввод блокируется на это время (lock).
+  window.mpick=(id)=>{
+    if(lock)return;
+    const el=document.getElementById('mc'+id); if(el.classList.contains('done'))return;
+    const card=cards.find(c=>c.id===id);
+    if(sel===null){ sel=card; el.classList.add('sel'); return; }
+    if(sel.id===id) return;
+    if(sel.pair===card.pair && sel.side!==card.side){
+      el.classList.add('done'); document.getElementById('mc'+sel.id).classList.add('done');
+      doneCount++; fb(true,'Дұрыс!'); sel=null;
+      if(doneCount===src.length){ setTimeout(()=>{screen.innerHTML=practiceHead('✦ Жұп тап ✦')+`<div class="done"><div class="big">🎉</div><h2>Бәрі дұрыс!</h2><p>Все пары найдены</p><div class="foot" style="position:static"><button class="btn primary" onclick="gamesList()">К играм</button></div></div>`;},600); }
+    } else {
+      lock=true; fb(false,'Попробуй ещё');
+      const selEl=document.getElementById('mc'+sel.id);
+      el.classList.add('wrong'); selEl.classList.add('wrong');
+      setTimeout(()=>{ el.classList.remove('wrong'); selEl.classList.remove('sel','wrong'); sel=null; lock=false; },500);
+    }
+  };
+  draw();
+}
+
+/* ---- Игра 4: Пропущенное слово ---- */
+function gameCloze(){
+  function shuffleArr(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+  // ИСПРАВЛЕНО: раньше верный ответ хранился фиксированным индексом (a:0/a:1) и всегда
+  // стоял на одной позиции — можно было угадывать по месту, а не по смыслу.
+  // Теперь верное слово храним текстом (correct), а порядок вариантов перемешиваем при показе.
+  const RAW=[
+   {sentence:'Бұл — қызыл ___.',options:['алма','үй','тау'],correct:'алма',hint:'яблоко'},
+   {sentence:'Мен ___ баламын.',options:['үлкен','кіші','жаңа'],correct:'кіші',hint:'маленький'},
+   {sentence:'Ол ___ ішінде тұр.',options:['үй','жол','аспан'],correct:'үй',hint:'дом'},
+   {sentence:'Біз ___ келдік.',options:['ертең','кеше','қазір'],correct:'кеше',hint:'вчера'},
+   {sentence:'Сен ___ жақсы көресің бе?',options:['шай','тас','түс'],correct:'шай',hint:'чай'},
+  ];
+  const list=RAW.map(q=>{ const opts=shuffleArr(q.options); return {sentence:q.sentence,hint:q.hint,options:opts,a:opts.indexOf(q.correct)}; });
+  let i=0,ans=false,sel=null;
+  function draw(){ const e=list[i];
+    screen.innerHTML=practiceHead('✦ Жетіспейтін сөз ✦')+`<div style="padding:14px 18px">
+     <button class="hintbtn" style="margin-bottom:10px" onclick="gamesList()">‹ Назад к играм</button>
+     <div class="qtext" style="text-align:center">${e.sentence}</div>
+     <div class="qhint" style="text-align:center">Подсказка: ${e.hint}</div>
+     ${e.options.map((o,k)=>`<button class="opt" data-k="${k}" onclick="cpick(${k})">${o}<span class="mark"></span></button>`).join('')}
+     </div><div class="foot"><button class="btn primary" id="cck" onclick="cnext()" disabled>Тексеру</button></div>`;
+    screen.scrollTop=0; ans=false; sel=null;
+  }
+  window.cpick=(k)=>{ if(ans)return; sel=k; document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); document.querySelector('.opt[data-k="'+k+'"]').classList.add('sel'); document.getElementById('cck').disabled=false; };
+  window.cnext=()=>{
+    if(ans){ i<list.length-1? (i++,draw()) : (screen.innerHTML=practiceHead('✦ Дайын ✦')+`<div class="done"><div class="big">✅</div><h2>Раунд завершён!</h2><div class="foot" style="position:static"><button class="btn primary" onclick="gamesList()">К играм</button></div></div>`); return; }
+    const e=list[i],ok=sel===e.a;
+    document.querySelectorAll('.opt').forEach(o=>{const k=+o.dataset.k; if(k===e.a)o.classList.add('correct'); if(k===sel&&!ok)o.classList.add('wrong');});
+    ans=true; fb(ok,ok?'Дұрыс!':'Дұрысы: '+e.options[e.a]);
+    document.getElementById('cck').textContent= i<list.length-1?'Әрі қарай →':'Завершить ✓';
+  };
   draw();
 }
 
